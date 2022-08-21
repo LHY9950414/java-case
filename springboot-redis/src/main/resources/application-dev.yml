@@ -1,0 +1,23 @@
+server:
+  port: 8001
+spring:
+  redis:
+    cluster:
+      nodes:
+        - 127.0.0.1:6379
+#    password: root
+    connect-timeout: 5000
+    lettuce:
+      pool:
+        max-active: 10000
+        max-wait: -1
+        max-idle: 200
+        min-idle: 20
+
+redis:
+  delay-query:
+    job-bucket: 1
+    job-name: delay:pool
+    bucket-name: delay:bucket
+
+

@@ -16,7 +16,7 @@
     </parent>
     <properties>
         <logstash-logback-encoder>7.2</logstash-logback-encoder>
-        <fastjson>2.0.11</fastjson>
+        <fastjson>2.0.12</fastjson>
     </properties>
 
     <dependencies>

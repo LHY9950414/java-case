@@ -1,5 +1,5 @@
 spring:
   application:
-    name: springboot-threadpool
+    name: springboot-thread-pool
   profiles:
     active: dev

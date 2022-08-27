@@ -5,7 +5,7 @@ package com.lhy.service;
  */
 public interface ThreadPoolService {
     /**
-     * 调用异步方法
+     * sendSync -> 调用异步方法
      */
     void sendSync();
 }

@@ -18,7 +18,7 @@ public class ThreadPoolServiceImpl implements ThreadPoolService {
     @SneakyThrows
     public void sendSync() {
         log.info("异步开始");
-        Thread.sleep(10000);
+        Thread.sleep(1000);
         log.info("异步结束");
     }
 }

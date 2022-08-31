@@ -13,10 +13,26 @@ import java.util.Arrays;
 @Slf4j
 public enum StatusCodeEnum {
 
-    OK(200,"成功"),
-    ERROR(500,"服务器内部错误"),
-    NULL_ERROR(ERROR.getCode(),"空指针异常"),
-    UNKNOWN(10000,"未知异常"),
+    /**
+     * 200
+     */
+    OK(200,"Succes"),
+    /**
+     * 400
+     */
+    VALID_ERROR(400,"Request parameter exception"),
+    /**
+     * 403
+     */
+    PERMISSION_ERROR(403,"Permission exception"),
+    /**
+     * 500
+     */
+    ERROR(500,"Internal server error"),
+    /**
+     * 10000
+     */
+    UNKNOWN(10000,"Unknown exception"),
     ;
 
     StatusCodeEnum(Integer code, String name) {

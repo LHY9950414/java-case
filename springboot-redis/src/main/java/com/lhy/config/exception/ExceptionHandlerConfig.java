@@ -4,11 +4,21 @@ import com.alibaba.fastjson.JSON;
 import com.lhy.common.Result;
 import com.lhy.enums.StatusCodeEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.CollectionUtils;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import reactor.util.annotation.Nullable;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 异常处理配置
@@ -27,9 +37,9 @@ public class ExceptionHandlerConfig {
     @ExceptionHandler(value = RedisException.class)
     @ResponseBody
     public Result exceptionHandler(HttpServletRequest req, RedisException ex){
-        StringBuffer requestURL = req.getRequestURL();
-        log.error("自定义异常捕获 requestURL -> {}, exception -> {}", requestURL.toString(), JSON.toJSONString(ex));
-        return Result.error(ex.getErrorCode(), ex.getErrorMsg());
+        StringBuffer requestUrl = req.getRequestURL();
+        log.error("自定义异常捕获 requestURL -> {}, msg -> {}, ex -> {}", requestUrl.toString(), ex.getErrorMsg(), JSON.toJSONString(ex));
+        return new Result(ex.getErrorCode(), ex.getErrorMsg());
     }
 
     /**
@@ -41,13 +51,15 @@ public class ExceptionHandlerConfig {
     @ExceptionHandler(value = NullPointerException.class)
     @ResponseBody
     public Result exceptionHandler(HttpServletRequest req, NullPointerException ex){
-        StringBuffer requestURL = req.getRequestURL();
-        log.error("空指针异常捕获 requestURL -> {}, ex -> {}", requestURL, JSON.toJSONString(ex));
-        return Result.error(StatusCodeEnum.NULL_ERROR.getCode(), StatusCodeEnum.NULL_ERROR.getName());
+        StringBuffer requestUrl = req.getRequestURL();
+        log.error("空指针异常捕获 requestURL -> {}, ex -> {}", requestUrl, JSON.toJSONString(ex));
+        return new Result(StatusCodeEnum.ERROR.getCode(), StatusCodeEnum.ERROR.getName());
     }
 
     /**
-     * 其它异常
+     * 处理参数校验异常
+     * 实体接收参数校验  post MethodArgumentNotValidException，get BindException 需要在controller方法中添加注解 @Validated
+     * 单个接收参数 ConstraintViolationException 需要在controller类上添加注解 @Validated
      * @param req
      * @param ex
      * @return
@@ -55,8 +67,39 @@ public class ExceptionHandlerConfig {
     @ExceptionHandler(value=Exception.class)
     @ResponseBody
     public Result exceptionHandler(HttpServletRequest req, Exception ex){
-        StringBuffer requestURL = req.getRequestURL();
-        log.error("其它异常捕获 requestURL -> {}, ex -> {}", requestURL.toString(), JSON.toJSONString(ex));
-        return Result.error(StatusCodeEnum.UNKNOWN.getCode(), StatusCodeEnum.UNKNOWN.getName());
+        StringBuffer requestUrl = req.getRequestURL();
+        log.error("参数校验异常捕获 requestURL -> {}, ex -> {}", requestUrl.toString(), ex);
+        if (ex instanceof MethodArgumentNotValidException) {
+            MethodArgumentNotValidException me = (MethodArgumentNotValidException) ex;
+            BindingResult bindingResult = me.getBindingResult();
+            return getErrorResult(me, bindingResult);
+        }
+        if (ex instanceof BindException) {
+            BindException be = (BindException) ex;
+            BindingResult bindingResult = be.getBindingResult();
+            return getErrorResult(be, bindingResult);
+
+        }
+        if (ex instanceof ConstraintViolationException) {
+            ConstraintViolationException ce = (ConstraintViolationException) ex;
+            Set<ConstraintViolation<?>> constraintViolations = ce.getConstraintViolations();
+            for (ConstraintViolation<?> item : constraintViolations) {
+                return new Result(StatusCodeEnum.VALID_ERROR.getCode(), item.getMessage());
+            }
+        }
+        // 其他异常处理
+        return new Result(StatusCodeEnum.UNKNOWN.getCode(), StatusCodeEnum.UNKNOWN.getName());
+    }
+
+    @Nullable
+    private static Result getErrorResult(BindException be, BindingResult bindingResult) {
+        if(be.hasErrors()){
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+            if(!CollectionUtils.isEmpty(allErrors)){
+                ObjectError objectError = allErrors.get(0);
+                return new Result(StatusCodeEnum.VALID_ERROR.getCode(), objectError.getDefaultMessage());
+            }
+        }
+        return null;
     }
 }

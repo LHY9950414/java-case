@@ -71,6 +71,8 @@ public class GeneratorCode {
         gc.setBaseResultMap(true);
         //xml 开启BaseColumnList
         gc.setBaseColumnList(true);
+        // 覆盖文件 false（否），true（是）
+        gc.setFileOverride(false);
         // 实体属性 Swagger2 注解
         gc.setSwagger2(true);
         // 时间类型对应策略: 只使用 java.util.date 代替

@@ -1,6 +1,5 @@
 server:
   port: 8003
-
 thread-pool:
   # 核心线程池大小
   core-pool-size: 10

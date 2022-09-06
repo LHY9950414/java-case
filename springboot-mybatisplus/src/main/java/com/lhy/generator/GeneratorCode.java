@@ -74,7 +74,7 @@ public class GeneratorCode {
         // 覆盖文件 false（否），true（是）
         gc.setFileOverride(false);
         // 实体属性 Swagger2 注解
-        gc.setSwagger2(true);
+//        gc.setSwagger2(true);
         // 时间类型对应策略: 只使用 java.util.date 代替
         gc.setDateType(DateType.ONLY_DATE);
         autoGenerator.setGlobalConfig(gc);

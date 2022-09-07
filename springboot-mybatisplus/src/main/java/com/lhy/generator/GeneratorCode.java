@@ -52,7 +52,7 @@ public class GeneratorCode {
     private static final String PARENT = "com.lhy";
     private static final String ENTITY = "pojo.po";
     private static final String MAPPER = "pojo.dao";
-    private static final String SERVICE = "Service";
+    private static final String SERVICE = "service";
     private static final String SERVICE_IMPL = "service.impl";
     private static final String CONTROLLER = "controller";
 

@@ -1,4 +1,4 @@
-package com.lhy.Service;
+package com.lhy.service;
 
 import com.lhy.pojo.po.User;
 import com.baomidou.mybatisplus.extension.service.IService;

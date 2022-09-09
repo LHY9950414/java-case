@@ -19,5 +19,6 @@ redis:
     job-bucket: 1
     job-name: delay:pool
     bucket-name: delay:bucket
+    bucket-job-key: delay:jobKey
 
 

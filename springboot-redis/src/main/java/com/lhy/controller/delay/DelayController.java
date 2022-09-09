@@ -18,9 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/delay")
 @RequiredArgsConstructor
 public class DelayController {
-
-    private final DelayBucket delayBucket;
-
     private final JobPool jobPool;
 
     /**
@@ -33,12 +30,11 @@ public class DelayController {
         job.setTopic("order");
         // 延时执行的时间 2 分钟
 //        job.setDelayTime(120000L);
-        // 往任务池当中添加任务
-        jobPool.addJob(job);
+
         // 创建任务引用对象 (计算触发执行的具体时间)
         DelayJob delayJob = new DelayJob(job);
-        // 往延时桶队列添加任务
-        delayBucket.addDelayJob(delayJob);
+        // 往任务池当中添加任务
+        jobPool.addJob(job, delayJob);
         return JSON.toJSONString(delayJob);
     }
 }

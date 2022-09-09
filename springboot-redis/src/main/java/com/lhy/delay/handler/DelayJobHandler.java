@@ -5,6 +5,7 @@ import com.lhy.delay.container.DelayBucket;
 import com.lhy.delay.container.JobPool;
 import com.lhy.delay.model.DelayJob;
 import com.lhy.delay.model.Job;
+import com.lhy.utils.RedisUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,16 @@ public class DelayJobHandler implements Runnable {
      * 索引
      */
     private Integer index;
+
+    /**
+     * redis bean
+     */
+    private RedisUtil redisUtil;
+
+    /**
+     * redis 缓存key
+     */
+    private String bucketJobKey;
 
     @Override
     public void run() {
@@ -76,8 +87,7 @@ public class DelayJobHandler implements Runnable {
         long delayDate = System.currentTimeMillis();
         delayJob.setDelayDate(delayDate);
         // 再次添加到任务中
-        delayBucket.addDelayJob(delayJob);
-        jobPool.addJob(job);
+        jobPool.addJob(job, delayJob);
     }
 
     /**
@@ -91,9 +101,15 @@ public class DelayJobHandler implements Runnable {
 
 
             // todo 处理完成任务 移除jobPool中的任务
-            jobPool.removeDelayJob(job.getId());
+            Integer id = job.getId();
+            jobPool.removeDelayJob(id);
             // todo 移除delayBucket中的任务
             delayBucket.removeDelayTime(index, delayJob);
+            // 移除rediskey
+            StringBuffer stringBuffer = new StringBuffer(bucketJobKey);
+            stringBuffer.append(":");
+            stringBuffer.append(id);
+            redisUtil.del(stringBuffer.toString());
         } catch (Exception e) {
             // todo 处理异常情况，重新放入队列消费
             processTtrJob(delayJob, job);

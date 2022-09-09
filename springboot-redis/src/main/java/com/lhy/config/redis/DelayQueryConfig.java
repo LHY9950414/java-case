@@ -22,4 +22,9 @@ public class DelayQueryConfig {
      * 存放桶队列数据的任务名称
      */
     private String bucketName;
+
+    /**
+     * redis 缓存key
+     */
+    private String bucketJobKey;
 }

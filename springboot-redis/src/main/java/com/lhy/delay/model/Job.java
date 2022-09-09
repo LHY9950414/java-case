@@ -14,7 +14,7 @@ public class Job implements Serializable {
     /**
      * 延时任务的唯一标识，用于检索任务
      */
-    private String id;
+    private Integer id;
 
     /**
      * 任务类型（具体业务类型）

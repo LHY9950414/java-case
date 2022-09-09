@@ -5,6 +5,7 @@ import com.lhy.config.redis.DelayQueryConfig;
 import com.lhy.delay.container.DelayBucket;
 import com.lhy.delay.container.JobPool;
 import com.lhy.delay.handler.DelayJobHandler;
+import com.lhy.utils.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
@@ -28,12 +29,13 @@ public class DelayListener implements ApplicationListener<ContextRefreshedEvent>
     private final DelayBucket delayBucket;
     private final JobPool jobPool;
     private final DelayQueryConfig delayQueryConfig;
+    private final RedisUtil redisUtil;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         //创建线程池
         ExecutorService executorService = new ThreadPoolExecutor(delayQueryConfig.getJobBucket(), delayQueryConfig.getJobBucket(), 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
         //执行任务
-        executorService.execute(new DelayJobHandler(delayBucket, jobPool, delayQueryConfig.getJobBucket() - Constants.ONE));
+        executorService.execute(new DelayJobHandler(delayBucket, jobPool, delayQueryConfig.getJobBucket() - Constants.ONE, redisUtil, delayQueryConfig.getBucketJobKey()));
     }
 }

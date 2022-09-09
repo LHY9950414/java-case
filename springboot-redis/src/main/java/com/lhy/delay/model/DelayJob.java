@@ -16,7 +16,7 @@ public class DelayJob {
     /**
      * 延时任务的唯一标识
      */
-    private String jodId;
+    private Integer jodId;
 
     /**
      * 任务的执行时间

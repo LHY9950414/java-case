@@ -35,7 +35,7 @@ public class DelayController {
 //        job.setDelayTime(120000L);
         // 往任务池当中添加任务
         jobPool.addJob(job);
-        // 创建任务引用对象(计算触发执行的具体时间)
+        // 创建任务引用对象 (计算触发执行的具体时间)
         DelayJob delayJob = new DelayJob(job);
         // 往延时桶队列添加任务
         delayBucket.addDelayJob(delayJob);

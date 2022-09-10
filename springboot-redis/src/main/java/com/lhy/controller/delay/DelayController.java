@@ -1,6 +1,8 @@
 package com.lhy.controller.delay;
 
 import com.alibaba.fastjson.JSON;
+import com.lhy.common.Constants;
+import com.lhy.config.redis.DelayQueryConfig;
 import com.lhy.delay.container.DelayBucket;
 import com.lhy.delay.container.JobPool;
 import com.lhy.delay.model.DelayJob;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class DelayController {
     private final JobPool jobPool;
+    private final DelayQueryConfig delayQueryConfig;
 
     /**
      * 添加
@@ -34,7 +37,7 @@ public class DelayController {
         // 创建任务引用对象 (计算触发执行的具体时间)
         DelayJob delayJob = new DelayJob(job);
         // 往任务池当中添加任务
-        jobPool.addJob(job, delayJob);
+        jobPool.addJob(job, delayJob, delayQueryConfig.getJobBucket() - Constants.ONE);
         return JSON.toJSONString(delayJob);
     }
 }

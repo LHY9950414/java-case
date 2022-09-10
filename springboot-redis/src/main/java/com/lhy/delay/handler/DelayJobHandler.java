@@ -87,7 +87,7 @@ public class DelayJobHandler implements Runnable {
         long delayDate = System.currentTimeMillis();
         delayJob.setDelayDate(delayDate);
         // 再次添加到任务中
-        jobPool.addJob(job, delayJob);
+        jobPool.addJob(job, delayJob, index);
     }
 
     /**

@@ -2,7 +2,7 @@ package com.lhy.service.impl;
 
 import com.lhy.pojo.po.User;
 import com.lhy.pojo.dao.UserMapper;
-import com.lhy.Service.IUserService;
+import com.lhy.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 

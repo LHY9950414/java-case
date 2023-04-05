@@ -15,8 +15,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <properties>
-        <logstash-logback-encoder>7.2</logstash-logback-encoder>
-        <fastjson>2.0.12</fastjson>
+        <logstash-logback-encoder>7.3</logstash-logback-encoder>
+        <fastjson>2.0.26</fastjson>
         <mybatis-plus-boot-starter>3.5.2</mybatis-plus-boot-starter>
     </properties>
 

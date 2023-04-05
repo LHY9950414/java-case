@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>GET请求示例</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    input[type="text"], #result {
+      width: 50%;
+      margin: 0 auto;
+    }
+    #result {
+      white-space: pre-wrap;
+    }
+    .loading {
+      display: none;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .loading img {
+      width: 50px;
+      height: 50px;
+    }
+    @media screen and (max-width: 600px) {
+      /* 当屏幕宽度小于等于600px时，执行以下样式 */
+      input[type="text"], #result {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+<div style="text-align: center;">
+  <label>输入内容：</label>
+  <input type="text" id="input-text">
+  <button onclick="sendRequest()">提交</button>
+</div>
+
+<div id="result"></div>
+
+<div class="loading">
+  <img src="./img/img_1.png" alt="Loading...">
+</div>
+
+<script>
+  function sendRequest() {
+    const inputText = document.getElementById("input-text").value;
+    const request = new XMLHttpRequest();
+    const loadingDiv = document.querySelector(".loading");
+    loadingDiv.style.display = "block";
+    request.open("GET", "https://4780115up3.goho.co/v1/01?prompt=" + inputText, true);
+    request.onload = function () {
+      loadingDiv.style.display = "none";
+      if (request.status === 200) {
+        const responseText = JSON.parse(request.responseText);
+        const resultDiv = document.getElementById("result");
+        const data = responseText.data;
+        resultDiv.innerHTML = data.replaceAll('\n\n', '<br>');
+      }
+    };
+    request.send();
+  }
+</script>
+</body>
+</html>

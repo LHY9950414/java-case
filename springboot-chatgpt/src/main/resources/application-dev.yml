@@ -1,0 +1,11 @@
+server:
+  port: 8004
+
+open:
+  ai:
+    model: text-davinci-003
+    timeout: 10000
+    key:
+
+
+

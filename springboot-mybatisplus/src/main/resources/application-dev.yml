@@ -1,5 +1,11 @@
 server:
   port: 8003
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/ers2.0?useUnicode=true&characterEncoding=UTF-8&useSSL=false&connectTimeout=60000&socketTimeout=60000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&serverTimezone=GMT%2B8
+    username: root
+    password: root
 thread-pool:
   # 核心线程池大小
   core-pool-size: 10

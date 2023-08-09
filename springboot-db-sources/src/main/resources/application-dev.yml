@@ -1,3 +1,34 @@
 server:
+#  服务端口
   port: 8005
-
+spring:
+  datasource:
+    dynamic:
+      primary: master
+      strict: false
+      datasource:
+        master:
+          url: jdbc:mysql://127.0.0.1:3306/db_sources_master?useUnicode=true&characterEncoding=UTF-8&useSSL=false&connectTimeout=60000&socketTimeout=60000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&serverTimezone=GMT%2B8
+          username: root
+          password: Lhy199504@
+        slave_1:
+          url: jdbc:mysql://127.0.0.1:3306/db_sources_slave1?useUnicode=true&characterEncoding=UTF-8&useSSL=false&connectTimeout=60000&socketTimeout=60000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&serverTimezone=GMT%2B8
+          username: root
+          password: Lhy199504@
+    hikari:
+#      一个链接的的时长 30分钟
+      max-lifetime: 1800000
+#      链接超时时间 5秒
+      connection-timeout: 5000
+#      链接池闲置时长 10分钟
+      idle-timeout: 600000
+#      最大链接数
+      maximum-pool-size: 100
+#      最小链接数
+      minimum-idle: 10
+mybatis-plus:
+#  mp加载Mybatis模版映射
+  mapper-locations: classpath:mapper/*Mapper.xml
+#  mp 打印sql日志
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

@@ -21,6 +21,7 @@ target/
 .mvn
 mvnw
 mvnw.cmd
+rebel.xml
 
 ### NetBeans ###
 /nbproject/private/

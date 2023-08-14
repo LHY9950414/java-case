@@ -21,7 +21,7 @@ public class DictDataController {
     private final DictDataService dictDataService;
 
     @GetMapping("/getPageList/v1")
-    public ResponseEntity<?> getPageList(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
+    public ResponseEntity<Page<DictData>> getPageList(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
         Page<DictData> page = dictDataService.lambdaQuery().page(new Page<>(pageNum, pageSize));
         return new ResponseEntity<>(page, HttpStatus.OK);
     }

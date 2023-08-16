@@ -3,11 +3,6 @@ server:
   port: 8005
 spring:
   datasource:
-#    druid:
-#      driver-class-name: com.mysql.cj.jdbc.Driver
-#      url: jdbc:mysql://172.16.148.129:3306/db_sources_master?useUnicode=true&characterEncoding=UTF-8&useSSL=false&connectTimeout=60000&socketTimeout=60000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&serverTimezone=GMT%2B8
-#      username: root
-#      password: Lhy199504@
     dynamic:
       primary: master
       strict: false

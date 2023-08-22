@@ -32,3 +32,53 @@ mybatis-plus:
 #  mp 打印sql日志
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  # springboot 2.x 兼容swagger3
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher
+  redis:
+    cluster:
+      nodes:
+        - 127.0.0.1:6379
+    # Redis服务器连接密码（默认为空）
+    #    password: root
+    connect-timeout: 5000
+    lettuce:
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制） 默认 8
+        max-active: 10000
+        # 连接池最大阻塞等待时间（使用负值表示没有限制） 默认 -1
+        max-wait: 20000
+        # 连接池中的最大空闲连接 默认 8
+        max-idle: 200
+        # 连接池中的最小空闲连接 默认 0
+        min-idle: 10
+      cluster:
+        refresh:
+          adaptive: true
+          # 60秒自动刷新一次
+          period: 60
+  # 限制 multipart 上传文件大小配置， 默认是单个文件上传为10MB
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
+# swagger 配置
+knife4j:
+  # 开启增强配置
+  enable: true
+  # 开启生产屏蔽
+  production: false
+  # 开启认证
+  basic:
+    enable: true
+    username: admin
+    password: admin
+# rsa密钥对+aes密钥
+secret-key:
+  enable: true
+  rsa_public_key: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC2kesLFq3EgUP6+x4jdRG0WzQLlJepEYD5vaYkIjFBcB+p0XObcm+4+ecDvO18RbPk41iXrh/9cs9EQWsYNSJf0Lw920dK/V+HZPLRfuyHGPsvJNeRXrmkrhu2EjCBwLn9uLmN7I/SLpW8d6egYImL26d1k/Bg/++5qRZ6w1IRwwIDAQAB
+  rsa_private_key: MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBALaR6wsWrcSBQ/r7HiN1EbRbNAuUl6kRgPm9piQiMUFwH6nRc5tyb7j55wO87XxFs+TjWJeuH/1yz0RBaxg1Il/QvD3bR0r9X4dk8tF+7IcY+y8k15FeuaSuG7YSMIHAuf24uY3sj9Iulbx3p6BgiYvbp3WT8GD/77mpFnrDUhHDAgMBAAECgYAnK6V/So1bxNQ+DBTKTLrQtGS1O1tSteOzMYJs7D0fKhxRBhREvMfFqzBqd+WILThMmo6OdJh+e1yG63Y7ymKmSDeHSr69iibr064dGYXUlLeNQD5OLk0UpbiYxQG5fSz2NYS955xNhVUiKTr9+I+fJNDbipZxwQ6IwmlLiGZ7oQJBAPwhAJbqS1jvGwB5f2E2U/lY+uKcdaM9lW7Qyfjq5F5JXiLRZ90qIvremH7IxwHqb4ghi74T+T6s0sB0VEGEjpECQQC5X4NbTX/x2CVEczBw3I8E+h+UeirjIiOfsOfPKbaszgiJYbkko+lSzMwQqdi9k0N/mcnNYIXXSSsXttDQrC0TAkEAnXtjqeAIVjFrVT2OgcL0aq/YbUk69U6XExOYxEC7ieUbxnW0AWG7XaVB7RctrpWnOolxhrVlHm/GZ+2BXzcT8QJAc30cGz/3XDbrUO/q2AWxXMpv7lMGcSeNximy4g/87UAXdW/apwcvkBRjdmY60DD1NoQbg8aE3BGLtWSCR99c3QJBAJF3rCHkfVAMDAYSg58pecucrMVpNqYkxsmm2rNK80Flmzim6iCqc/rlDUkMTvGlhZT5q9S74Rc2Xia0uxEuF8w=
+  #  aes明文密钥：e1d187942291e998e3e1f9e4aee547a6
+  #  aes_key为aes的密文密钥
+  aes_key: A+icZyhi5eC6wzNEJs5JjgwbfKj0jGOxnqzPWRM74HGBeu7PAYe3PeqxjZRwWwfd25auyJMFJQvu8GCxOrfY3QNdVNrigLzLJSfGKUj9qvDKSs7wC4dHT1Nj3461w/IRFq/MBmKl95ms1ii9y2IwjPAXyQKRHw80/WSJ8ozl2XU=

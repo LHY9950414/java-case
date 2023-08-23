@@ -5,8 +5,6 @@ import com.example.springbootdbsources.pojo.po.DictData;
 import com.example.springbootdbsources.service.DictDataService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,9 +19,8 @@ public class DictDataController {
     private final DictDataService dictDataService;
 
     @GetMapping("/getPageList/v1")
-    public ResponseEntity<Page<DictData>> getPageList(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
-        Page<DictData> page = dictDataService.lambdaQuery().page(new Page<>(pageNum, pageSize));
-        return new ResponseEntity<>(page, HttpStatus.OK);
+    public Page<DictData> getPageList(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
+        return dictDataService.lambdaQuery().page(new Page<>(pageNum, pageSize));
     }
 
 }
